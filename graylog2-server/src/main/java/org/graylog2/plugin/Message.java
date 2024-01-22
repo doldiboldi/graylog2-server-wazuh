@@ -426,16 +426,16 @@ public class Message implements Messages, Indexable {
             //         LOG.debug("Full message with \".\" in message key: {}", this);
             //     }
             // } else {
-                if (obj.containsKey(key)) {
-                    final String newKey = key.replace(KEY_REPLACEMENT_CHAR, '.');
-                    // Deliberate warning duplicates because the key with the "." might be transformed before reaching
-                    // the duplicate original key with a "_". Otherwise we would silently overwrite the transformed key.
-                    LOG.warn("Keys must not contain a \".\" character! Ignoring field \"{}\"=\"{}\" in message [{}] - Unable to replace \".\" with a \"{}\" because of key conflict: \"{}\"=\"{}\"",
-                        newKey, fields.get(newKey), getId(), KEY_REPLACEMENT_CHAR, key, value);
-                    LOG.debug("Full message with \".\" in message key: {}", this);
-                }
-                obj.put(key, value);
+            if (obj.containsKey(key)) {
+                final String newKey = key.replace(KEY_REPLACEMENT_CHAR, '.');
+                // Deliberate warning duplicates because the key with the "." might be transformed before reaching
+                // the duplicate original key with a "_". Otherwise we would silently overwrite the transformed key.
+                LOG.warn("Keys must not contain a \".\" character! Ignoring field \"{}\"=\"{}\" in message [{}] - Unable to replace \".\" with a \"{}\" because of key conflict: \"{}\"=\"{}\"",
+                    newKey, fields.get(newKey), getId(), KEY_REPLACEMENT_CHAR, key, value);
+                LOG.debug("Full message with \".\" in message key: {}", this);
             }
+            obj.put(key, value);
+            
         }
 
         obj.put(FIELD_MESSAGE, getMessage());
